@@ -2,6 +2,7 @@ const express = require("express")
 const path = require("node:path");
 const { title } = require("node:process");
 const bodyParser = require('body-parser');
+const userRouter = require("./routes/usersRouter")
 
 
 const PORT = 8080;
@@ -12,46 +13,31 @@ app.set("view engine", "ejs")
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const messages = [
-    {
-        text: "Hi there",
-        user: "Amanda",
-        added: new Date()
-    },
-    {
-        text: "How its going",
-        user: "Roman",
-        added: new Date()
-    }
-];
+// const messages = [
+//     {
+//         text: "Hi there",
+//         user: "Amanda",
+//         added: new Date()
+//     },
+//     {
+//         text: "How its going",
+//         user: "Roman",
+//         added: new Date()
+//     }
+// ];
 
-app.get('/', (req, res) => {
-    res.render("index", { title:"Mini MessageBoard ", messages: messages })
-})
+app.use("/", userRouter)
 
-app.get('/new', (req, res) => {
-    res.render("form")    
-})
+// app.get('/', (req, res) => {
 
-app.post('/new', (req, res) => {
-    console.log(req.body)
-    const { messageUser, messageText } = req.body;
-    messages.push({ text: messageText, user: messageUser, added: new Date() })
-    res.redirect('/')
-})
+// })
 
+// app.get('/new', (req, res) => {
+   
+// })
 
+// app.post('/new', (req, res) => {
 
-
-
-
-
-
-
-
-
-
-
-
+// })
 
 app.listen(PORT, console.log(`Server is running on port ${PORT}`))
